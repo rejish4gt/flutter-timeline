@@ -14,7 +14,7 @@ class TimelinePainter extends CustomPainter {
     @required this.lineColor,
     @required this.backgroundColor,
     this.firstElement = false,
-    this.lastElement,
+    this.lastElement = false,
   }) :super();
 
   @override
@@ -24,16 +24,40 @@ class TimelinePainter extends CustomPainter {
 
   void _centerElementPaint(Canvas canvas, ui.Size size)
   {
-    Paint linePaint = new Paint()
+    Paint lineStroke = new Paint()
     ..color = lineColor
     ..strokeCap = StrokeCap.square
     ..strokeWidth = 2.0
     ..style = PaintingStyle.stroke;
 
-    canvas.drawLine(
+    if(firstElement)
+    {
+      canvas.drawLine(
+      size.center(new Offset(0.0, -4.0)), 
+      size.bottomCenter(new Offset(0.0, 0.0)), 
+      lineStroke);
+    }
+    else if(lastElement)
+    {
+      canvas.drawLine(
+      size.topCenter(new Offset(0.0, 0.0)), 
+      size.center(new Offset(0.0, -4.0)), 
+      lineStroke);
+    }
+    else {
+      canvas.drawLine(
       size.topCenter(new Offset(0.0, 2.0)), 
       size.bottomCenter(new Offset(0.0, -2.0)), 
-      linePaint);
+      lineStroke);
+    }
+    
+    
+    Paint circleFill = new Paint()
+    ..color = lineColor
+    ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(size.center(new Offset(0.0, -8.0)), 6.0, circleFill);
+    
 
   }
 
@@ -49,11 +73,15 @@ class TimelineElement extends StatelessWidget {
   final Color lineColor;
   final Color backgroundColor;
   final TimelineModel model;
+  final bool firstElement;
+  final bool lastElement;
 
   TimelineElement({
     @required this.lineColor,
     @required this.backgroundColor,
     @required this.model,
+    this.firstElement = false,
+    this.lastElement = false,
   });
 
   Widget _buildLine(BuildContext context) {
@@ -62,7 +90,9 @@ class TimelineElement extends StatelessWidget {
       child: new CustomPaint(
         painter: new TimelinePainter(
           lineColor: lineColor,
-          backgroundColor: backgroundColor
+          backgroundColor: backgroundColor,
+          firstElement: firstElement,
+          lastElement: lastElement,
         ),
       ),
     );

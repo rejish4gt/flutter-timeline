@@ -4,12 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:timeline/model/timeline-model.dart';
 import 'package:timeline/timeline-element.dart';
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
-
 class TimelineComponent extends StatefulWidget {
 
   final List<TimelineModel> timelineList;
@@ -28,9 +22,6 @@ class TimelineComponentState extends State<TimelineComponent> {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        child: 
-          new Flexible(
-            child: new Container(
               child: new ListView.builder(
                 itemCount: widget.timelineList.length,
                 itemBuilder: (_, index) {
@@ -38,12 +29,12 @@ class TimelineComponentState extends State<TimelineComponent> {
                     lineColor: Theme.of(context).accentColor,
                     backgroundColor: Theme.of(context).backgroundColor,
                     model: widget.timelineList[index],
+                    firstElement: index==0,
+                    lastElement: widget.timelineList.length==index+1,
                   );
                 },
               ),
-            ),
-          ),
-    );
+            );
   }
 
 }

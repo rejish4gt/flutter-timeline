@@ -1,8 +1,8 @@
 name: timeline
 description: A new flutter package project.
 version: 0.0.1
-author:
-homepage:
+author: Rejish Radhakrishnan <rejish4gt@gmail.com>
+homepage: https://github.com/rejish4gt/flutter-timeline
 
 dependencies:
   flutter:

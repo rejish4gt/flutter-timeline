@@ -12,7 +12,7 @@ A flutter package that allows you to create basic timelines on your flutter appl
 
 ## Getting Started
 
-You will need to the following dependency in your `pubspec.yaml` file
+You will need to add the following dependency in your `pubspec.yaml` file to download the depedency.
 
 ```dart
 dependencies:
@@ -20,6 +20,11 @@ dependencies:
     sdk: flutter
   timeline: 0.0.4
 ```
+Note: This was built on the following tools.
+
+* Flutter - v0.4.4
+* Dart - v2.0.0-dev.54.0
+
 ### Usage
 
 You will need to create a list of `TimelineModel` first. This creates an instance with an `id` which is a String at the moment, along with `title` and `description`

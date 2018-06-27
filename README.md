@@ -18,7 +18,7 @@ You will need to the following dependency in your [pubspec.yaml] file
 dependencies:
   flutter:
     sdk: flutter
-  timeline: 0.0.5
+  timeline: 0.0.4
 ```
 ### Usage
 
@@ -32,7 +32,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Authors
 
-* **Rejish Radhakrishnan** - *Initial work*
+* **Rejish Radhakrishnan**
 
 ## License
 

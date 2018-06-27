@@ -12,7 +12,7 @@ A flutter package that allows you to create basic timelines on your flutter appl
 
 ## Getting Started
 
-You will need to the following dependency in your [pubspec.yaml] file
+You will need to the following dependency in your `pubspec.yaml` file
 
 ```dart
 dependencies:

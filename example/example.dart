@@ -17,7 +17,13 @@ class TimelineExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new TimelineComponent(timelineList: list,);
+    return new TimelineComponent(
+      timelineList: list,
+        // lineColor: Colors.red[200], // Defaults to accent color if not provided
+        // backgroundColor: Colors.black87, // Defaults to white if not provided
+        // headingColor: Colors.black, // Defaults to black if not provided
+        // descriptionColor: Colors.grey, // Defaults to grey if not provided
+      );
   }
 
 

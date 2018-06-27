@@ -18,7 +18,7 @@ You will need to add the following dependency in your `pubspec.yaml` file to dow
 dependencies:
   flutter:
     sdk: flutter
-  timeline: 0.0.4
+  timeline: 0.0.1
 ```
 Note: This was built on the following tools.
 

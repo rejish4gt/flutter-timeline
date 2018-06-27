@@ -15,8 +15,8 @@ limitations under the License. */
 library timeline;
 
 import 'package:flutter/material.dart';
-import 'package:timeline/model/timeline-model.dart';
-import 'package:timeline/timeline-element.dart';
+import 'package:timeline/model/timeline_model.dart';
+import 'package:timeline/timeline_element.dart';
 
 class TimelineComponent extends StatefulWidget {
 

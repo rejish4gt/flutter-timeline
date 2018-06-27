@@ -1,72 +1,7 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:timeline/model/timeline-model.dart';
-
-class TimelinePainter extends CustomPainter {
-
-  final Color lineColor;
-  final Color backgroundColor;
-  final bool firstElement;
-  final bool lastElement;
-
-  TimelinePainter({
-    @required this.lineColor,
-    @required this.backgroundColor,
-    this.firstElement = false,
-    this.lastElement = false,
-  }) :super();
-
-  @override
-  void paint(ui.Canvas canvas, ui.Size size) {
-    _centerElementPaint(canvas, size);
-  }
-
-  void _centerElementPaint(Canvas canvas, ui.Size size)
-  {
-    Paint lineStroke = new Paint()
-    ..color = lineColor
-    ..strokeCap = StrokeCap.square
-    ..strokeWidth = 2.0
-    ..style = PaintingStyle.stroke;
-
-    if(firstElement)
-    {
-      canvas.drawLine(
-      size.center(new Offset(0.0, -4.0)), 
-      size.bottomCenter(new Offset(0.0, 0.0)), 
-      lineStroke);
-    }
-    else if(lastElement)
-    {
-      canvas.drawLine(
-      size.topCenter(new Offset(0.0, 0.0)), 
-      size.center(new Offset(0.0, -4.0)), 
-      lineStroke);
-    }
-    else {
-      canvas.drawLine(
-      size.topCenter(new Offset(0.0, 2.0)), 
-      size.bottomCenter(new Offset(0.0, -2.0)), 
-      lineStroke);
-    }
-    
-    
-    Paint circleFill = new Paint()
-    ..color = lineColor
-    ..style = PaintingStyle.fill;
-
-    canvas.drawCircle(size.center(new Offset(0.0, -8.0)), 6.0, circleFill);
-    
-
-  }
-
-  @override
-  bool shouldRepaint(TimelinePainter oldDelegate) {
-    return oldDelegate.lineColor!=lineColor || oldDelegate.backgroundColor!=backgroundColor;
-  }
-
-}
+import 'timeline-painter.dart';
 
 class TimelineElement extends StatelessWidget {
 
@@ -75,6 +10,7 @@ class TimelineElement extends StatelessWidget {
   final TimelineModel model;
   final bool firstElement;
   final bool lastElement;
+  final Animation<double> controller;
 
   TimelineElement({
     @required this.lineColor,
@@ -82,9 +18,10 @@ class TimelineElement extends StatelessWidget {
     @required this.model,
     this.firstElement = false,
     this.lastElement = false,
+    this.controller
   });
 
-  Widget _buildLine(BuildContext context) {
+  Widget _buildLine(BuildContext context, Widget child) {
     return new Container(
       width: 40.0,
       child: new CustomPaint(
@@ -93,6 +30,7 @@ class TimelineElement extends StatelessWidget {
           backgroundColor: backgroundColor,
           firstElement: firstElement,
           lastElement: lastElement,
+          controller: controller
         ),
       ),
     );
@@ -100,6 +38,7 @@ class TimelineElement extends StatelessWidget {
 
   Widget _buildContentColumn(BuildContext context) {
     return new Column(
+      mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         new Container(
@@ -111,31 +50,41 @@ class TimelineElement extends StatelessWidget {
             ),
           ),
         ),
-        new Text(
-          model.description,
-          style: new TextStyle(
-            color: Colors.grey
+        new Expanded(
+                  child: new Text(
+            model.description!=null?model.description:"",
+            style: new TextStyle(
+              color: Colors.grey
+            ),
           ),
         )
       ],
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildRow(BuildContext context)
+  {
     return new Container(
       height: 80.0,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          _buildLine(context),
+          new AnimatedBuilder(
+            builder: _buildLine,
+            animation: controller,
+          ),
           new Expanded(
             child: _buildContentColumn(context),
             ),
         ],
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildRow(context);
   }
 
 }

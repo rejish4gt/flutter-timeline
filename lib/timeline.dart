@@ -30,7 +30,9 @@ class TimelineComponent extends StatefulWidget {
 
   final Color descriptionColor;
 
-  const TimelineComponent({Key key, this.timelineList, this.lineColor, this.backgroundColor, this.headingColor, this.descriptionColor}) : super(key: key);
+  final Color shrinkWrap;
+    
+  const TimelineComponent({Key key, this.timelineList, this.lineColor, this.backgroundColor, this.headingColor, this.descriptionColor, this.shrinkWrap = false}) : super(key: key);
 
   @override
   TimelineComponentState createState() {
@@ -59,6 +61,8 @@ class TimelineComponentState extends State<TimelineComponent> with SingleTickerP
     return new Container(
               child: new ListView.builder(
                 itemCount: widget.timelineList.length,
+                shrinkWrap: widget.shrinkWrap,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (_, index) {
                   return new TimelineElement(
                     lineColor: widget.lineColor==null?Theme.of(context).accentColor:widget.lineColor,

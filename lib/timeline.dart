@@ -30,7 +30,7 @@ class TimelineComponent extends StatefulWidget {
 
   final Color descriptionColor;
 
-  final Color shrinkWrap;
+  final bool shrinkWrap;
     
   const TimelineComponent({Key key, this.timelineList, this.lineColor, this.backgroundColor, this.headingColor, this.descriptionColor, this.shrinkWrap = false}) : super(key: key);
 

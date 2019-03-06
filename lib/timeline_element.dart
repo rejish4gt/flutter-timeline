@@ -16,8 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:timeline/model/timeline_model.dart';
 import 'timeline_painter.dart';
 
-typedef void TapCallback(TimelineModel model);
-typedef void LongPressCallback(TimelineModel model);
+typedef void TapCallback(TimelineElement element);
+typedef void LongPressCallback(TimelineElement element);
 
 class TimelineElement extends StatelessWidget {
 
@@ -45,8 +45,8 @@ class TimelineElement extends StatelessWidget {
     this.controller, 
     this.headingColor, 
     this.descriptionColor,
-    this.onItemTap,
-    this.onItemLongPress
+    this.onTap,
+    this.onLongPress
   });
 
   Widget _buildLine(BuildContext context, Widget child) {
@@ -68,12 +68,12 @@ class TimelineElement extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (onTap != null) {
-          onTap(this.model);
+          onTap(this);
         }
       },
       onLongPress: () {
         if (onLongPress != null) {
-          onLongPress(this.model);
+          onLongPress(this);
         }
       },
       child: Column(

@@ -18,8 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:timeline/model/timeline_model.dart';
 import 'package:timeline/timeline_element.dart';
 
-typedef void ItemTapCallback(TimelineModel model);
-typedef void ItemLongPressCallback(TimelineModel model);
+typedef void ItemTapCallback(TimelineElement element);
+typedef void ItemLongPressCallback(TimelineElement element);
 
 class TimelineComponent extends StatefulWidget {
 
@@ -78,14 +78,14 @@ class TimelineComponentState extends State<TimelineComponent> with SingleTickerP
                     controller: controller,
                     headingColor: widget.headingColor,
                     descriptionColor: widget.descriptionColor,
-                    onTap: (TimelineModel model) {
+                    onTap: (TimelineElement element) {
                       if (widget.onItemTap != null) {
-                        widget.onItemTap(model);
+                        widget.onItemTap(element);
                       }
                     },
-                    onLongPress: (TimelineModel model) {
+                    onLongPress: (TimelineElement element) {
                       if (widget.onItemLongPress != null) {
-                        widget.onItemLongPress(model);
+                        widget.onItemLongPress(element);
                       }
                     }
                   );

@@ -16,6 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:timeline/model/timeline_model.dart';
 import 'timeline_painter.dart';
 
+typedef void TapCallback(TimelineModel model);
+typedef void LongPressCallback(TimelineModel model);
+
 class TimelineElement extends StatelessWidget {
 
   final Color lineColor;
@@ -27,6 +30,12 @@ class TimelineElement extends StatelessWidget {
   final Color headingColor;
   final Color descriptionColor;
 
+  /// Called when the timeline item is tapped.
+  final TapCallback onTap;
+
+  /// Called when the timeline item is long pressed.
+  final LongPressCallback onLongPress;
+
   TimelineElement({
     @required this.lineColor,
     @required this.backgroundColor,
@@ -35,7 +44,9 @@ class TimelineElement extends StatelessWidget {
     this.lastElement = false,
     this.controller, 
     this.headingColor, 
-    this.descriptionColor
+    this.descriptionColor,
+    this.onItemTap,
+    this.onItemLongPress
   });
 
   Widget _buildLine(BuildContext context, Widget child) {
@@ -54,29 +65,41 @@ class TimelineElement extends StatelessWidget {
   }
 
   Widget _buildContentColumn(BuildContext context) {
-    return new Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        new Container(
-          padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-          child: new Text(
-            model.title.length>47?model.title.substring(0,47)+"...":model.title,
-            style: new TextStyle(
-              fontWeight: FontWeight.bold,
-              color: headingColor!=null?headingColor:Colors.black,
+    return GestureDetector(
+      onTap: () {
+        if (onTap != null) {
+          onTap(this.model);
+        }
+      },
+      onLongPress: () {
+        if (onLongPress != null) {
+          onLongPress(this.model);
+        }
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Container(
+            padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+            child: new Text(
+              model.title.length>47?model.title.substring(0,47)+"...":model.title,
+              style: new TextStyle(
+                fontWeight: FontWeight.bold,
+                color: headingColor!=null?headingColor:Colors.black,
+              ),
             ),
           ),
-        ),
-        new Expanded(
-                  child: new Text(
-            model.description!=null?(model.description.length>50?model.description.substring(0,50)+"...":model.description):"", // To prevent overflowing of text to the next element, the text is truncated if greater than 75 characters
-            style: new TextStyle(
-              color: descriptionColor!=null?descriptionColor:Colors.grey,
+          new Expanded(
+                    child: new Text(
+              model.description!=null?(model.description.length>50?model.description.substring(0,50)+"...":model.description):"", // To prevent overflowing of text to the next element, the text is truncated if greater than 75 characters
+              style: new TextStyle(
+                color: descriptionColor!=null?descriptionColor:Colors.grey,
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 

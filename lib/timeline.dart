@@ -18,6 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:timeline/model/timeline_model.dart';
 import 'package:timeline/timeline_element.dart';
 
+typedef void ItemTapCallback(TimelineModel model);
+typedef void ItemLongPressCallback(TimelineModel model);
+
 class TimelineComponent extends StatefulWidget {
 
   final List<TimelineModel> timelineList;
@@ -30,7 +33,13 @@ class TimelineComponent extends StatefulWidget {
 
   final Color descriptionColor;
 
-  const TimelineComponent({Key key, this.timelineList, this.lineColor, this.backgroundColor, this.headingColor, this.descriptionColor}) : super(key: key);
+  /// Called when the timeline item is tapped.
+  final ItemTapCallback onItemTap;
+
+  /// Called when the timeline item is long pressed.
+  final ItemLongPressCallback onItemLongPress;
+
+  const TimelineComponent({Key key, this.timelineList, this.lineColor, this.backgroundColor, this.headingColor, this.descriptionColor, this.onItemTap, this.onItemLongPress}) : super(key: key);
 
   @override
   TimelineComponentState createState() {
@@ -69,6 +78,16 @@ class TimelineComponentState extends State<TimelineComponent> with SingleTickerP
                     controller: controller,
                     headingColor: widget.headingColor,
                     descriptionColor: widget.descriptionColor,
+                    onTap: (TimelineModel model) {
+                      if (widget.onItemTap != null) {
+                        widget.onItemTap(model);
+                      }
+                    },
+                    onLongPress: (TimelineModel model) {
+                      if (widget.onItemLongPress != null) {
+                        widget.onItemLongPress(model);
+                      }
+                    }
                   );
                 },
               ),

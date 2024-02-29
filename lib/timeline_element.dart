@@ -17,7 +17,6 @@ import 'package:timeline/model/timeline_model.dart';
 import 'timeline_painter.dart';
 
 class TimelineElement extends StatelessWidget {
-
   final Color lineColor;
   final Color backgroundColor;
   final TimelineModel model;
@@ -27,28 +26,26 @@ class TimelineElement extends StatelessWidget {
   final Color headingColor;
   final Color descriptionColor;
 
-  TimelineElement({
-    @required this.lineColor,
-    @required this.backgroundColor,
-    @required this.model,
-    this.firstElement = false,
-    this.lastElement = false,
-    this.controller, 
-    this.headingColor, 
-    this.descriptionColor
-  });
+  TimelineElement(
+      {@required this.lineColor,
+      @required this.backgroundColor,
+      @required this.model,
+      this.firstElement = false,
+      this.lastElement = false,
+      this.controller,
+      this.headingColor,
+      this.descriptionColor});
 
   Widget _buildLine(BuildContext context, Widget child) {
     return new Container(
       width: 40.0,
       child: new CustomPaint(
         painter: new TimelinePainter(
-          lineColor: lineColor,
-          backgroundColor: backgroundColor,
-          firstElement: firstElement,
-          lastElement: lastElement,
-          controller: controller
-        ),
+            lineColor: lineColor,
+            backgroundColor: backgroundColor,
+            firstElement: firstElement,
+            lastElement: lastElement,
+            controller: controller),
       ),
     );
   }
@@ -61,18 +58,23 @@ class TimelineElement extends StatelessWidget {
         new Container(
           padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
           child: new Text(
-            model.title.length>47?model.title.substring(0,47)+"...":model.title,
+            model.title.length > 47
+                ? model.title.substring(0, 47) + "..."
+                : model.title,
             style: new TextStyle(
               fontWeight: FontWeight.bold,
-              color: headingColor!=null?headingColor:Colors.black,
+              color: headingColor != null ? headingColor : Colors.black,
             ),
           ),
         ),
         new Expanded(
-                  child: new Text(
-            model.description!=null?(model.description.length>50?model.description.substring(0,50)+"...":model.description):"", // To prevent overflowing of text to the next element, the text is truncated if greater than 75 characters
+          child: new Text(
+            model.description != null
+                ? (model.description)
+                : "", // To prevent overflowing of text to the next element, the text is truncated if greater than 75 characters
+            maxLines: 4,
             style: new TextStyle(
-              color: descriptionColor!=null?descriptionColor:Colors.grey,
+              color: descriptionColor != null ? descriptionColor : Colors.grey,
             ),
           ),
         )
@@ -80,8 +82,7 @@ class TimelineElement extends StatelessWidget {
     );
   }
 
-  Widget _buildRow(BuildContext context)
-  {
+  Widget _buildRow(BuildContext context) {
     return new Container(
       height: 80.0,
       color: backgroundColor,
@@ -95,7 +96,7 @@ class TimelineElement extends StatelessWidget {
           ),
           new Expanded(
             child: _buildContentColumn(context),
-            ),
+          ),
         ],
       ),
     );
@@ -105,5 +106,4 @@ class TimelineElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return _buildRow(context);
   }
-
 }
